@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\BookController;
-use App\Http\Controllers\Api\AuthController; // Assuming you have an AuthController for login/register
+use App\Http\Controllers\Api\AuthController; 
 
 /*
 |--------------------------------------------------------------------------
@@ -24,19 +24,14 @@ Route::post('/login', [AuthController::class, 'login']);
 // 3. Protected Routes (Require a valid Bearer token from login)
 Route::middleware('auth:sanctum')->group(function () {
     
-    // Get the currently logged-in user's info (Standard Laravel route)
+    // Get the currently logged-in user's info 
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
 
     // This single line automatically creates all 5 routes for your BookController:
-    // GET /api/books (index)
-    // POST /api/books (store)
-    // GET /api/books/{id} (show)
-    // PUT /api/books/{id} (update)
-    // DELETE /api/books/{id} (destroy)
     Route::apiResource('books', BookController::class);
     
-    // Optional: Logout route if you want to invalidate the token later
+    // Logout route if you want to invalidate the token later
     Route::post('/logout', [AuthController::class, 'logout']);
 });
